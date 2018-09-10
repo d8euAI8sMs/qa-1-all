@@ -60,8 +60,8 @@ public:
         CPPUNIT_ASSERT_EQUAL_MESSAGE("success",
                 static_cast<int>(calculator::quadeq_error_success), r);
         CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE("1st root",
-                -0.2, x1, 1e-15);
+                -1, x1, 1e-15);
         CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE("2nd root",
-                1, x2, 1e-15);
+                0.2, x2, 1e-15);
     }
 };
