@@ -4,10 +4,12 @@
 #include <cppunit/TextOutputter.h>
 #include <iostream>
 
+CPPUNIT_TEST_SUITE_REGISTRATION(QuadEqTest);
+
 int main(int argc, char ** argv)
 {
 	CppUnit::TextUi::TestRunner runner;
-	runner.addTest(QuadEqTest::suite());
+	runner.addTest(CppUnit::TestFactoryRegistry::getRegistry().makeTest());
     CppUnit::OFileStream o;
     bool toXml = false;
     for (int i = 1; i < argc; ++i)
