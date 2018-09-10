@@ -1,15 +1,45 @@
 #include "quadeq.hpp"
 
 #include <cppunit/XmlOutputter.h>
+#include <cppunit/XmlOutputterHook.h>
+#include <cppunit/tools/XmlDocument.h>
+#include <cppunit/tools/XmlElement.h>
 #include <cppunit/TextOutputter.h>
 #include <iostream>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(QuadEqTest);
+CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(QuadEqTest, QuadEqTest::name());
+CPPUNIT_REGISTRY_ADD_TO_DEFAULT(QuadEqTest::name());
+
+class TestSuiteAttributeAwareXmlOutputterHook : public CppUnit::XmlOutputterHook
+{
+private:
+    CppUnit::TestSuite * _suite;
+public:
+    TestSuiteAttributeAwareXmlOutputterHook(CppUnit::TestSuite * s)
+        : _suite(s)
+    {
+    }
+public:
+    void beginDocument(CppUnit::XmlDocument *document) override
+    {
+        auto n = new CppUnit::XmlElement("Suite", _suite->getName());
+        auto a = new CppUnit::XmlElement("Author", "Alexander Vasilevsky");
+        auto d = new CppUnit::XmlElement("Date",   local_date());
+        document->rootElement().addElement(n);
+        document->rootElement().addElement(a);
+        document->rootElement().addElement(d);
+    }
+};
 
 int main(int argc, char ** argv)
 {
-	CppUnit::TextUi::TestRunner runner;
-	runner.addTest(CppUnit::TestFactoryRegistry::getRegistry().makeTest());
+	CppUnit::TextTestRunner runner;
+
+    auto test = dynamic_cast < CppUnit::TestSuite * > (
+        CppUnit::TestFactoryRegistry::getRegistry(QuadEqTest::name()).makeTest());
+
+	runner.addTest(test);
+
     CppUnit::OFileStream o;
     bool toXml = false;
     for (int i = 1; i < argc; ++i)
@@ -17,7 +47,9 @@ int main(int argc, char ** argv)
     if (toXml)
     {
         o.open("result.xml");
-        runner.setOutputter(new CppUnit::XmlOutputter(&runner.result(), o));
+        auto xo = new CppUnit::XmlOutputter(&runner.result(), o);
+        xo->addHook(new TestSuiteAttributeAwareXmlOutputterHook(test));
+        runner.setOutputter(xo);
     }
     else
         runner.setOutputter(new CppUnit::TextOutputter(&runner.result(), std::cout));

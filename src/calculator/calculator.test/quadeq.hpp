@@ -9,6 +9,10 @@
 class QuadEqTest : public CppUnit::TestFixture
 {
 
+public:
+
+    static std::string name() { return "QuadEqTest"; }
+
     CPPUNIT_TEST_SUITE(QuadEqTest);
         CPPUNIT_TEST(_GWT(
             quadsq_solve,
