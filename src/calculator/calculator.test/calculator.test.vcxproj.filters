@@ -26,5 +26,8 @@
     <ClInclude Include="quadeq.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="quadeq_bbd.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

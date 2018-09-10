@@ -1,4 +1,5 @@
 #include "quadeq.hpp"
+#include "quadeq_bbd.hpp"
 
 #include <cppunit/XmlOutputter.h>
 #include <cppunit/XmlOutputterHook.h>
@@ -9,6 +10,8 @@
 
 CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(QuadEqTest, QuadEqTest::name());
 CPPUNIT_REGISTRY_ADD_TO_DEFAULT(QuadEqTest::name());
+CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(QuadEqBBDTest, QuadEqBBDTest::name());
+CPPUNIT_REGISTRY_ADD_TO_DEFAULT(QuadEqBBDTest::name());
 
 class TestSuiteAttributeAwareXmlOutputterHook : public CppUnit::XmlOutputterHook
 {
@@ -35,8 +38,13 @@ int main(int argc, char ** argv)
 {
 	CppUnit::TextTestRunner runner;
 
+    bool bbd = true;
+    for (int i = 1; i < argc; ++i)
+        if (strcmp(argv[i], "-no-bbd") == 0) bbd = false;
+
     auto test = dynamic_cast < CppUnit::TestSuite * > (
-        CppUnit::TestFactoryRegistry::getRegistry(QuadEqTest::name()).makeTest());
+        CppUnit::TestFactoryRegistry::getRegistry(
+            bbd ? QuadEqBBDTest::name() : QuadEqTest::name()).makeTest());
 
 	runner.addTest(test);
 
