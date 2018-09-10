@@ -1,0 +1,21 @@
+version: '{build}'
+
+image:
+  - Visual Studio 2013
+  
+environment:
+  project_name: calculator
+  test_project_name: calculator.test
+
+configuration:
+  - Release
+
+install:
+  - git submodule update --init --recursive
+
+build:
+  project: src\%project_name%\%project_name%.sln
+
+artifacts:
+  - path: 'src\%project_name%\%CONFIGURATION%\%project_name%.dll'
+  - path: 'src\%project_name%\%CONFIGURATION%\%test_project_name%.exe'
