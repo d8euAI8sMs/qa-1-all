@@ -56,6 +56,7 @@ int main(int argc, char ** argv)
     {
         o.open("result.xml");
         auto xo = new CppUnit::XmlOutputter(&runner.result(), o);
+        xo->setStyleSheet("report.xsl");
         xo->addHook(new TestSuiteAttributeAwareXmlOutputterHook(test));
         runner.setOutputter(xo);
     }
