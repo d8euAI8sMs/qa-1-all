@@ -8,6 +8,12 @@
 namespace treetools
 {
     
+    class unmovable_tree_error : public std::logic_error
+    {
+        unmovable_tree_error(const std::string & message)
+            : std::logic_error(message) {}
+    };
+
     /**
      * The class implements an observable tree data structure.
      */
@@ -54,11 +60,25 @@ namespace treetools
         tree(tree && o) { *this = std::move(o); }
     public:
         tree & operator = (const tree &) = delete;
+        /**
+         * Moves the given object into this tree.
+         * 
+         * <p/>
+         * Beware of moving tree that is a child of
+         * another tree. Such operation is not permitted
+         * since it cannot be implemented transparent
+         * and would have a lot of undesirable side effects.
+         * 
+         * @param o The object to be moved
+         * 
+         * @throws unmovable_tree_error If this or `o` has
+         *                              non-null parent
+         */
         tree & operator = (tree && o)
         {
-            auto _newparent = o.m_parent;
-            o._parent(nullptr);
-            m_parent = _newparent;
+            if (m_parent || o.m_parent)
+                throw unmovable_tree_error(
+                    "move operation is only permitted for parentless trees");
             m_children = std::move(o.m_children);
             m_observer = std::move(o.m_observer);
             m_data = std::move(o.m_data);
