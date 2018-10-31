@@ -94,7 +94,8 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="test.h" />
+    <ClInclude Include="5mins.stub.h" />
+    <ClInclude Include="5mins.test.h" />
     <ClInclude Include="tests" />
   </ItemGroup>
   <ItemGroup>
