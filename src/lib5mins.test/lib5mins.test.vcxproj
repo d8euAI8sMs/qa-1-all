@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="5mins.stub.h" />
     <ClInclude Include="5mins.test.h" />
+    <ClInclude Include="cxxtest_custom_traits.h" />
     <ClInclude Include="tests" />
   </ItemGroup>
   <ItemGroup>

@@ -29,5 +29,8 @@
     <ClInclude Include="5mins.test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cxxtest_custom_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

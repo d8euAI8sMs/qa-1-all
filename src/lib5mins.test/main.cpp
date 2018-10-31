@@ -1,5 +1,6 @@
 ﻿#include <fstream>
 
+#include "cxxtest_custom_traits.h" // fix encoding issues
 #include "runner.cpp"
 
 #include <cxxtest/XmlPrinter.h>
