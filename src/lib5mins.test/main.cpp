@@ -1,4 +1,6 @@
-﻿#include "runner.cpp"
+﻿#include <fstream>
+
+#include "runner.cpp"
 
 #include <cxxtest/XmlPrinter.h>
 
@@ -17,7 +19,9 @@ public:
         XmlPrinter::leaveWorld(desc);
         auto str = os.str();
         auto pos = str.find(">", str.find("?>") + 2);
-        o << str.substr(0, pos) << " author=\"alexander василевский vasilevsky\"";
+        o << str.substr(0, pos)
+            .replace(str.find("UTF-8"), 5, "windows-1251")
+            << " author=\"Василевский Александр\"";
         o << str.substr(pos);
         o.flush();
     }
@@ -44,9 +48,35 @@ int main(int argc, char *argv[])
 
     int status;
 
-    WorldMetadataAwareXmlPrinter tmp;
+    bool xml = false;
+
+    /* remove custom args because cxxtest doesn't like them */
+
+    auto argv0 = new char * [argc];
+    auto argc0 = argc;
+
+    for (size_t i = 0, j = 0; i < argc; ++i)
+    {
+        argv0[j++] = argv[i];
+        if (strcmp(argv[i], "-a") == 0) { xml = true; --argc0; --j; }
+        if (strcmp(argv[i], "-b") == 0) { xml = false; --argc0; --j; }
+    }
+
     CxxTest::RealWorldDescription::_worldName = "lib5mins";
-    status = CxxTest::Main< CxxTest::XmlPrinter >( tmp, argc, argv );
+
+    /* conditionally print test results to xml or to console */
+
+    if (xml)
+    {
+        std::ofstream fs("report.xml");
+        WorldMetadataAwareXmlPrinter tmp(fs);
+        status = CxxTest::Main < CxxTest::XmlPrinter > (tmp, argc0, argv0);
+    }
+    else
+    {
+        CxxTest::ErrorPrinter tmp;
+        status = CxxTest::Main < CxxTest::ErrorPrinter > (tmp, argc0, argv0);
+    }
 
     return status;
 }
