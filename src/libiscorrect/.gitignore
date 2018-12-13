@@ -1,0 +1,12 @@
+*.sdf
+*.opensdf
+*.suo
+*.vcxproj.user
+*.aps
+obj
+ipch
+Debug
+Release
+DebugExe
+ReleaseExe
+ReadMe.txt
