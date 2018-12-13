@@ -14,22 +14,23 @@ private:
     void setUp()
     {
         testData = {{
-            /* 00 */ std::make_tuple("00:00", 0, "ноль часов пять минут"), // basic logic
-            /* 01 */ std::make_tuple("12:34", 0, "двенадцать часов тридцать девять минут"), // all digits read correctly
-            /* 02 */ std::make_tuple("08:08", 0, "восемь часов тринадцать минут"), // occasionally octal input
-            /* 03 */ std::make_tuple("00:59", 0, "один час четыре минуты"), // minute field overflow
-            /* 04 */ std::make_tuple("00:58", 0, "один час три минуты"),
-            /* 05 */ std::make_tuple("00:57", 0, "один час две минуты"),
-            /* 06 */ std::make_tuple("00:56", 0, "один час одна минуты"),
-            /* 07 */ std::make_tuple("00:55", 0, "один час ноль минут"),
-            /* 08 */ std::make_tuple("00:54", 0, "ноль часов пятьдесят девять минут"),
-            /* 09 */ std::make_tuple("23:55", 0, "ноль часов ноль минут"), // hour field overflow
-            /* 10 */ std::make_tuple("23:56", 0, "ноль часов одна минута"), // hour field overflow
+            /* 00 */ std::make_tuple("00:00", 0, "zero hours five minutes"), // basic logic
+            /* 01 */ std::make_tuple("12:34", 0, "twelve hours thirty nine minutes"), // all digits read correctly
+            /* 02 */ std::make_tuple("08:08", 0, "eight hours thirteen minutes"), // occasionally octal input
+            /* 03 */ std::make_tuple("00:59", 0, "one hours four minutes"), // minute field overflow
+            /* 04 */ std::make_tuple("00:58", 0, "one hours three minutes"),
+            /* 05 */ std::make_tuple("00:57", 0, "one hours two minutes"),
+            /* 06 */ std::make_tuple("00:56", 0, "one hours one minutes"),
+            /* 07 */ std::make_tuple("00:55", 0, "one hours zero minutes"),
+            /* 08 */ std::make_tuple("00:54", 0, "zero hours fifty nine minutes"),
+            /* 09 */ std::make_tuple("23:55", 0, "zero hours zero minutes"), // hour field overflow
+            /* 10 */ std::make_tuple("23:56", 0, "zero hours one minutes"), // hour field overflow
             /* 11 */ std::make_tuple("01.02", 1, ""),
             /* 12 */ std::make_tuple("0A:0B", 1, ""), // occasionally hex input
-            /* 13 */ std::make_tuple("XY:ZW", 1, ""),
-            /* 14 */ std::make_tuple("00:60", 1, ""), // invalid time (minutes)
-            /* 15 */ std::make_tuple("24:00", 1, ""), // invalid time (hours)
+            /* 13 */ std::make_tuple("XY:ZW", 2, ""),
+            /* 14 */ std::make_tuple("00:60", 2, ""), // invalid time (minutes)
+            /* 15 */ std::make_tuple("24:00", 2, ""), // invalid time (hours)
+            /* 16 */ std::make_tuple("24:000", 1, ""), // too long input
         }};
     }
 private:
@@ -60,4 +61,5 @@ public:
     void testInvalidInput_Letters()                     { s_doTest(testData[13]); }
     void testInvalidInput_MinutesRange()                { s_doTest(testData[14]); }
     void testInvalidInput_HoursRange()                  { s_doTest(testData[15]); }
+    void testInvalidInput_TooLong()                     { s_doTest(testData[16]); }
 };
