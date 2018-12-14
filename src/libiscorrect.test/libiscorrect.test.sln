@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libiscorrect.test", "libiscorrect.test.vcxproj", "{AA66D464-492E-4456-8ECF-A7E83FA3B137}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libiscorrect", "..\libiscorrect\libiscorrect.vcxproj", "{2699CFC5-3F31-4487-B164-FFA05BABDB99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugExe|Win32 = DebugExe|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA66D464-492E-4456-8ECF-A7E83FA3B137}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AA66D464-492E-4456-8ECF-A7E83FA3B137}.Debug|Win32.Build.0 = Debug|Win32
+		{AA66D464-492E-4456-8ECF-A7E83FA3B137}.DebugExe|Win32.ActiveCfg = Debug|Win32
+		{AA66D464-492E-4456-8ECF-A7E83FA3B137}.DebugExe|Win32.Build.0 = Debug|Win32
+		{AA66D464-492E-4456-8ECF-A7E83FA3B137}.Release|Win32.ActiveCfg = Release|Win32
+		{AA66D464-492E-4456-8ECF-A7E83FA3B137}.Release|Win32.Build.0 = Release|Win32
+		{2699CFC5-3F31-4487-B164-FFA05BABDB99}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2699CFC5-3F31-4487-B164-FFA05BABDB99}.Debug|Win32.Build.0 = Debug|Win32
+		{2699CFC5-3F31-4487-B164-FFA05BABDB99}.DebugExe|Win32.ActiveCfg = DebugExe|Win32
+		{2699CFC5-3F31-4487-B164-FFA05BABDB99}.DebugExe|Win32.Build.0 = DebugExe|Win32
+		{2699CFC5-3F31-4487-B164-FFA05BABDB99}.Release|Win32.ActiveCfg = Release|Win32
+		{2699CFC5-3F31-4487-B164-FFA05BABDB99}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
