@@ -224,7 +224,8 @@ int parser::_on_token()
             // don't accept fn(), only fn(x)
             if ((_expr.top().type != expr_const) &&
                 (_expr.top().type != expr_complex))
-                return result_unexpected_token;
+                return (_expr.top().type == expr_soe) ?
+                    result_unbalanced_braces : result_unexpected_token;
             _expr.push(expression::wrap(std::move(_tok)));
             int r;
             if ((r = _purge()) != result_correct) return r;
@@ -251,17 +252,20 @@ int parser::_purge()
             return result_correct;
         if (_expr.top().type == expr_fname)
             return result_unexpected_token;
-        return result_unmatched_braces;
+        return result_unbalanced_braces;
     }
 
     expression cl = std::move(_expr.top());
     expression op;
 
-    // open brace must exist somewhere on the stack
-    do _expr.pop(); while (_expr.top().type != expr_op_br);
+    do _expr.pop(); while ((_expr.top().type != expr_op_br) &&
+                           (_expr.top().type != expr_soe));
 
     op = std::move(_expr.top());
     _expr.pop();
+
+    if (op.type == expr_soe)
+        return result_unbalanced_braces;
 
     if (!token_traits::are_matched(cl.val, op.val))
         return result_unmatched_braces;
