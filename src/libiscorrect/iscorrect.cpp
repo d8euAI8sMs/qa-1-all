@@ -178,6 +178,8 @@ int parser::_on_token()
     switch (_tok.type)
     {
     case token_eos:
+        if (_expr.top().type == expr_op)
+            return result_unexpected_token;
         return _purge();
     /* [[fallthrough]] */
     case token_identifier:
@@ -342,10 +344,13 @@ void main()
     assert(lex.next(tok) == token_eos);
     assert((token { token_eos, 22, 0, "" }) == tok);
     
+    assert(parser("+")() == result_unexpected_token);
     assert(parser("123")() == result_correct);
     assert(parser("abc")() == result_unexpected_token);
     assert(parser("abc(1)")() == result_correct);
     assert(parser("abc(fn(1))")() == result_correct);
+    assert(parser("(1)")() == result_correct);
+    assert(parser("(1 + )")() == result_unexpected_token);
     assert(parser("1 + 2")() == result_correct);
     assert(parser(" * 2")() == result_unexpected_token);
     assert(parser(" + 2")() == result_correct);
