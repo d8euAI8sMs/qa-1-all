@@ -35,8 +35,7 @@ namespace token_traits
     }
     bool are_matched(const std::string & b1, const std::string & b2)
     {
-        return (std::string("[({").find(b1) == std::string("])}").find(b2)) ||
-            (std::string("[({").find(b2) == std::string("])}").find(b1));
+        return (std::string("[({})]").find(b1) == std::string("])}{([").find(b2));
     }
     bool is_valid_un_op(const std::string & b1)
     {
