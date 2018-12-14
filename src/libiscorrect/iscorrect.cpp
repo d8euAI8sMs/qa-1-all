@@ -214,6 +214,7 @@ int parser::_on_token()
         {
             if ((_expr.top().type != expr_soe) &&
                 (_expr.top().type != expr_fname) &&
+                (_expr.top().type != expr_op_br) &&
                 (_expr.top().type != expr_op))
                 return result_unexpected_token;
             _expr.push(expression::wrap(std::move(_tok)));
@@ -350,6 +351,7 @@ void main()
     assert(parser("abc(1)")() == result_correct);
     assert(parser("abc(fn(1))")() == result_correct);
     assert(parser("(1)")() == result_correct);
+    assert(parser("((1))")() == result_correct);
     assert(parser("(1 + )")() == result_unexpected_token);
     assert(parser("1 + 2")() == result_correct);
     assert(parser(" * 2")() == result_unexpected_token);
